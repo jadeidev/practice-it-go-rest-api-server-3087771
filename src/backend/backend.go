@@ -48,7 +48,7 @@ func (a *App) Run() {
 func (a *App) allProducts(w http.ResponseWriter, r *http.Request) {
 	products, err := getProducts(a.DB)
 	if err != nil {
-		fmt.Printf("getProducts error: %s\n", err.Error)
+		fmt.Printf("getProducts error: %s\n", err)
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -58,7 +58,7 @@ func (a *App) allProducts(w http.ResponseWriter, r *http.Request) {
 func (a *App) allOrders(w http.ResponseWriter, r *http.Request) {
 	orders, err := getOrders(a.DB)
 	if err != nil {
-		fmt.Printf("getOrders error: %s\n", err.Error)
+		fmt.Printf("getOrders error: %s\n", err)
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -83,7 +83,7 @@ func (a *App) fetchProduct(w http.ResponseWriter, r *http.Request) {
 	p.ID, _ = strconv.Atoi(id)
 	err := p.getProduct(a.DB)
 	if err != nil {
-		fmt.Printf("getProduct error: %s\n", err.Error)
+		fmt.Printf("getProduct error: %s\n", err)
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -98,7 +98,7 @@ func (a *App) fetchOrder(w http.ResponseWriter, r *http.Request) {
 	o.ID, _ = strconv.Atoi(id)
 	err := o.getOrder(a.DB)
 	if err != nil {
-		fmt.Printf("getOrder error: %s\n", err.Error)
+		fmt.Printf("getOrder error: %s\n", err)
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -111,7 +111,7 @@ func (a *App) newProduct(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(reqBody, &p)
 	err := p.createProduct(a.DB)
 	if err != nil {
-		fmt.Printf("createProduct error: %s\n", err.Error)
+		fmt.Printf("createProduct error: %s\n", err)
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -129,7 +129,7 @@ func (a *App) newOrder(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(reqBody, &o)
 	err := o.createOrder(a.DB)
 	if err != nil {
-		fmt.Printf("createOrder error: %s\n", err.Error)
+		fmt.Printf("createOrder error: %s\n", err)
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -139,7 +139,7 @@ func (a *App) newOrder(w http.ResponseWriter, r *http.Request) {
 		oi.OrderId = o.ID
 		err := oi.createOrderItem(a.DB)
 		if err != nil {
-			fmt.Printf("createOrderItem error: %s\n", err.Error)
+			fmt.Printf("createOrderItem error: %s\n", err)
 			respondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
@@ -158,7 +158,7 @@ func (a *App) newOrderItems(w http.ResponseWriter, r *http.Request) {
 	for _, item := range ois {
 		err := item.createOrderItem(a.DB)
 		if err != nil {
-			fmt.Printf("createOrderItem error: %s\n", err.Error)
+			fmt.Printf("createOrderItem error: %s\n", err)
 			respondWithError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
