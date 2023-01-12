@@ -20,14 +20,14 @@ const tableProductCreationQuery = `create table if not exists products
 	name varchar(256) not null,
 	inventory int not null,
 	price int not null,
-	status varchar(64) no null)`
+	status varchar(64) not null)`
 
 func TestMain(m *testing.M) {
 	a = backend.App{}
 	a.Initialize()
 	ensureTableExists()
 	code := m.Run()
-	// clearProductTable()
+	clearProductTable()
 	os.Exit(code)
 }
 
@@ -38,11 +38,11 @@ func ensureTableExists() {
 }
 
 func clearProductTable() {
-	a.DB.Exec("delete products")
+	a.DB.Exec("delete from products")
 	a.DB.Exec("delete from sqlite_sequence where name='products'")
 }
 
-func testGetNonExistentProduct(t *testing.T) {
+func TestGetNonExistentProduct(t *testing.T) {
 	clearProductTable()
 	req, _ := http.NewRequest("GET", "/product/11", nil)
 	response := executeRequest(req)
