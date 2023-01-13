@@ -42,7 +42,7 @@ func (a *App) initializeRoutes() {
 
 func (a *App) Run() {
 	fmt.Println("server started")
-	log.Fatal(http.ListenAndServe(a.Port, a.Router))
+	log.Fatal(http.ListenAndServe(a.Port, a.Router)) // start server
 }
 
 func (a *App) allProducts(w http.ResponseWriter, r *http.Request) {
